@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Happy Birthday TANUUU</title>
+  <title>Happy Birthday TANUU</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -153,16 +153,13 @@ body{
   will-change:transform;
 }
 
-/* ---- the bow + arrow rig ----
-   Placed lower-left and rotated by JS to aim at the heart, so the shot travels
-   on a DIAGONAL. The whole rig (left/top + rotation around the grip) is set in
-   JS from measured geometry; everything below is in the rig's own space. */
+/* ---- the bow + arrow rig ---- */
 .archery{
-  position:absolute; top:0; left:0;    /* JS sets left/top so the grip anchors */
-  width:clamp(100px, 18vw, 168px);     /* smaller, daintier bow — delicate against the heart */
+  position:absolute; top:0; left:0;
+  width:clamp(120px, 22vw, 190px);     
   cursor:grab;
   -webkit-tap-highlight-color:transparent;
-  touch-action:none;                   /* we own the drag gesture */
+  touch-action:none;                   
   will-change:transform;
 }
 .archery:active{ cursor:grabbing; }
@@ -170,7 +167,7 @@ body{
 .archery:focus-visible .bow{ filter:drop-shadow(0 0 0 3px rgba(255,255,255,.85)) drop-shadow(0 10px 18px rgba(120,50,20,.4)); }
 .bow{
   display:block; width:100%; height:auto;
-  filter:drop-shadow(0 12px 18px rgba(90,40,15,.3));
+  filter:drop-shadow(0 12px 20px rgba(60,20,5,.5));
   overflow:visible;
 }
 
@@ -179,18 +176,20 @@ body{
   position:absolute; left:50%; bottom:32%;
   width:2px; height:190%; margin-left:-1px;
   transform-origin:bottom center;
-  background:linear-gradient(0deg, rgba(255,214,150,.6) 0%, rgba(255,150,170,.22) 52%, transparent 78%);
+  background:linear-gradient(0deg, rgba(255,214,150,.8) 0%, rgba(255,150,170,.4) 52%, transparent 78%);
   opacity:0; pointer-events:none;
 }
 
-/* the arrow overlaps the bow at the nock and flies to the heart */
+/* HIGH-VISIBILITY ARROW ENHANCEMENTS */
 .arrow{
   position:absolute; left:0; right:0; margin-inline:auto;
-  bottom:36%;                          /* JS re-anchors the tail to the nock */
-  width:17.5%; height:auto;
+  bottom:36%;                          
+  width:20%; height:auto;
   overflow:visible;
   will-change:transform;
-  filter:drop-shadow(0 5px 7px rgba(90,40,15,.36));
+  filter:
+    drop-shadow(0 0 8px rgba(255,255,255,0.9))
+    drop-shadow(0 4px 10px rgba(110,10,30,0.6));
 }
 .arrow__wings{ transform-box:fill-box; transform-origin:50% 90%; }
 .arrow__wings .wingL,
@@ -208,8 +207,9 @@ body{
   font-weight:600; font-style:italic;
   font-size:clamp(13px, 3.1vw, 19px);
   letter-spacing:.16em; text-transform:uppercase;
-  color:#b06a7c;
-  opacity:0;                          /* GSAP reveals */
+  color:#a80f43;
+  text-shadow: 0 0 10px rgba(255,255,255,0.8);
+  opacity:0;                          
 }
 .hero__ring{ display:none; }
 
@@ -232,11 +232,8 @@ body{
    ============================================================ */
 .field{
   position:absolute; inset:0;
-  z-index:4;                          /* below the flood; revealed once it covers */
+  z-index:4;                          
   opacity:0;
-  /* purely decorative — must never intercept the tap on the heart beneath it.
-     An opacity:0 element is still hit-testable, so without this the invisible
-     field (z4, above the hero z3) swallows every Act-1 tap. */
   pointer-events:none;
   overflow:hidden;
   background:
@@ -256,7 +253,6 @@ body{
 .blob--3{ width:52vmax; height:52vmax; left:24vmax; bottom:-22vmax;
   background:radial-gradient(circle, rgba(180,20,70,.8), transparent 66%); }
 
-/* faint grid — a hair of parallax gives the flood depth, not flatness */
 .fgrid{
   position:absolute; inset:-6%;
   background-image:
@@ -270,7 +266,6 @@ body{
   background:radial-gradient(128% 96% at 50% 44%, transparent 50%, rgba(70,6,28,.5) 100%);
 }
 
-/* the camera — everything on the flood rides a slow continuous push */
 .camera{
   position:absolute; inset:0;
   display:flex; flex-direction:column; justify-content:center; align-items:center;
@@ -290,8 +285,6 @@ body{
 
 .headline{ font-family:"Fraunces", Georgia, serif; line-height:.92; }
 .hl__line{ display:block; }
-/* the mask each headline word hinges out of. Padded to clear ascenders +
-   descenders so glyphs never peek past the clip edge when parked. */
 .mask{
   display:inline-block; overflow:hidden;
   padding:.14em .06em;
@@ -305,10 +298,8 @@ body{
   color:#fff6f1;
   text-shadow:0 6px 34px rgba(60,4,24,.34), 0 2px 3px rgba(90,8,36,.42);
 }
-/* each glyph hinges up on its own bottom edge, under its own perspective */
 .hl__ch{ display:inline-block; will-change:transform; }
 
-/* gold hand-drawn underline under the second word */
 .uline{
   width:clamp(150px, 40vw, 380px); height:auto;
   margin-top:clamp(4px,1.4vh,14px);
@@ -325,7 +316,6 @@ body{
   opacity:0; transform:translateY(10px);
 }
 
-/* cinema bars — closed = black, they open as the wish lands */
 .bar{
   position:absolute; left:0; right:0; height:16vh;
   background:#12040b; z-index:3; will-change:transform; pointer-events:none;
@@ -355,8 +345,6 @@ body{
   z-index:6;
   pointer-events:none;
   color:var(--ink);
-  /* hard gate: wish__hero keeps opacity:1 (its clip-path drives the write-on),
-     so without this its clipped sliver + drop-shadow would leak into Acts 1–3. */
   visibility:hidden;
 }
 .wish.is-in{ visibility:visible; }
@@ -390,17 +378,13 @@ body{
   font-family:"Great Vibes", cursive; font-weight:400;
   font-size:clamp(40px, 9.6vw, 86px);
   line-height:.98; margin:-.02em 0 .06em;
-  /* one consistent rose, top-lit — every letter reads the same (no per-glyph
-     colour shift, which is what made the old rose→gold version look messy).
-     Deep enough to hold up against the tree's bright bloom behind it. */
   background:linear-gradient(180deg, #e85a83 0%, #c41f52 50%, #9c0f42 100%);
   -webkit-background-clip:text; background-clip:text; color:transparent;
-  /* a crisp cream edge for legibility over the tree + one soft drop */
   filter:
     drop-shadow(0 1px 1px rgba(255,252,248,.98))
     drop-shadow(0 2px 6px rgba(130,18,55,.45));
   clip-path:inset(0 100% -28% -10%);
-  transform-origin:8% 60%;             /* breathe from the start of the line */
+  transform-origin:8% 60%;
 }
 .wish__rule{
   display:block; width:clamp(46px, 13vw, 110px); height:2px;
@@ -429,7 +413,6 @@ body{
   animation:write 1.2s cubic-bezier(.62,.04,.24,1) .35s forwards,
             wishBreath 4s ease-in-out 1.9s infinite;
 }
-/* a gentle living breath — transform only, so it can never wash the fill out */
 @keyframes wishBreath{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.02); } }
 .wish.is-in .wish__heroWrap::before{ animation:hlin .8s ease .3s forwards, hlpulse 3.4s ease-in-out 1.7s infinite; }
 .wish.is-in .wish__heroWrap::after{ animation:twk 2.6s ease-in-out 1.6s infinite; }
@@ -474,31 +457,39 @@ body{
 }
 
 /* ============================================================
-   THE BRIDGE — a quiet gold cue, bottom-centre, once the wish settles
+   HIGH-VISIBILITY "WALK WITH ME" BRIDGE BUTTON
    ============================================================ */
 .continue{
-  position:absolute; left:50%; bottom:15%; z-index:7;
+  position:absolute; left:50%; bottom:12%; z-index:7;
   transform:translate(-50%,10px);
   display:flex; flex-direction:column; align-items:center; gap:9px;
-  background:none; border:0; cursor:pointer;
-  opacity:0; transition:opacity .7s ease, transform .7s var(--ease-out);
+  padding: 12px 28px;
+  border-radius: 999px;
+  background: rgba(255, 243, 234, 0.92);
+  border: 1px solid rgba(212, 162, 61, 0.6);
+  box-shadow: 0 10px 30px rgba(110, 10, 48, 0.35), 0 0 20px rgba(255, 207, 106, 0.5);
+  cursor:pointer;
+  opacity:0; transition:opacity .7s ease, transform .7s var(--ease-out), background .3s ease;
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
 }
 .continue.is-shown{ opacity:1; transform:translate(-50%,0); }
 .continue__ring{
-  width:38px; height:38px; display:block; color:var(--gold-2);
-  filter:drop-shadow(0 4px 10px rgba(120,50,10,.28));
+  width:42px; height:42px; display:block; color:#a80f43;
+  filter:drop-shadow(0 2px 6px rgba(120,50,10,.3));
   animation:ringPulse 2.6s ease-in-out infinite;
 }
 .continue__ring svg{ width:100%; height:100%; }
-.continue__ring circle{ fill:rgba(255,248,242,.55); stroke:currentColor; stroke-width:1.3; }
+.continue__ring circle{ fill:rgba(255,215,190,.6); stroke:currentColor; stroke-width:1.8; }
 .continue__label{
   font-family:"Cormorant Garamond", Georgia, serif;
-  font-style:italic; font-weight:600;
-  font-size:clamp(12px, 2.8vw, 15px); letter-spacing:.1em;
-  color:#8a4a5a; text-shadow:0 1px 8px rgba(255,248,241,.9);
+  font-style:italic; font-weight:700;
+  font-size:clamp(14px, 3.2vw, 18px); letter-spacing:.12em;
+  color:#6e0a31; text-shadow:0 1px 2px rgba(255,255,255,0.9);
+  text-transform: uppercase;
 }
-@keyframes ringPulse{ 0%,100%{ transform:scale(1); opacity:.85; } 50%{ transform:scale(1.09); opacity:1; } }
-.continue:hover .continue__ring{ color:var(--gold-1); }
+@keyframes ringPulse{ 0%,100%{ transform:scale(1); opacity:.9; } 50%{ transform:scale(1.12); opacity:1; } }
+.continue:hover{ background: #ffffff; }
+.continue:hover .continue__ring{ color:var(--rose); }
 
 /* ============================================================
    SHARED — the small round close button used by both kept rooms
@@ -570,11 +561,11 @@ body{
   from{ transform:scale(1.14) translate(var(--kbx0,0), var(--kby0,0)); }
   to  { transform:scale(1.0)  translate(var(--kbx1,0), var(--kby1,0)); }
 }
-.gallery__stage::after{                    /* fine gold hairline frame, inset */
+.gallery__stage::after{
   content:""; position:absolute; inset:0; pointer-events:none;
   border-radius:10px; border:1px solid rgba(255,224,180,.35);
 }
-.gallery__stage::before{                   /* soft base-of-frame shadow for depth */
+.gallery__stage::before{
   content:""; position:absolute; inset:0; z-index:2; pointer-events:none;
   box-shadow:inset 0 -50px 60px -40px rgba(0,0,0,.55), inset 0 40px 50px -40px rgba(0,0,0,.3);
 }
@@ -593,7 +584,7 @@ body{
 .gallery__arrow:active{ transform:translateY(-50%) scale(.92); }
 .gallery__arrow--prev{ left:clamp(6px, 2.4vw, 26px); }
 .gallery__arrow--next{ right:clamp(6px, 2.4vw, 26px); }
-@media (max-width: 560px){ .gallery__arrow{ display:none; } }  /* swipe carries mobile */
+@media (max-width: 560px){ .gallery__arrow{ display:none; } }
 
 .gallery__foot{
   display:flex; flex-direction:column; align-items:center; gap:14px;
@@ -641,9 +632,10 @@ body{
 .cinema__video{
   position:absolute; inset:0; width:100%; height:100%;
   object-fit:contain; background:#000;
+  z-index: 1;
 }
 .cinema__scrim{
-  position:absolute; inset:0; pointer-events:none;
+  position:absolute; inset:0; pointer-events:none; z-index: 2;
   background:radial-gradient(120% 90% at 50% 50%, transparent 55%, rgba(0,0,0,.5) 100%);
   opacity:0; transition:opacity .4s ease;
 }
@@ -693,6 +685,45 @@ body{
   transition:opacity .4s ease;
 }
 .cinema.is-playing .cinema__label{ opacity:0; }
+
+/* ============================================================
+   FLOATING NEXT BUTTON (Hidden by default)
+   ============================================================ */
+.floating-next {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 10000;
+  display: none; /* Only reveals when video starts */
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #190810;
+  background: linear-gradient(135deg, #f6d896 0%, #e8a23d 100%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+  text-decoration: none;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: transform .3s ease, box-shadow .3s ease, filter .3s ease;
+}
+.floating-next.is-visible {
+  display: inline-flex;
+}
+.floating-next:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 12px 30px rgba(232, 162, 61, 0.5);
+  filter: brightness(1.1);
+}
+.floating-next:active {
+  transform: translateY(0) scale(0.98);
+}
   </style>
 
   <script type="importmap">
@@ -705,6 +736,9 @@ body{
 </head>
 
 <body>
+  <!-- Floating Next Button (Hidden until video plays) -->
+  <a id="floatingNext" href="https://adityayedpalwar.github.io/HBD" class="floating-next" target="_blank" rel="noopener noreferrer">NEXT</a>
+
   <div class="scene">
 
     <!-- ACT 4 — THE TREE CANVAS (z0) -->
@@ -750,20 +784,20 @@ body{
         <svg id="bow" class="bow" viewBox="0 0 460 300" aria-hidden="true">
           <defs>
             <linearGradient id="wood" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#7a3e1d"/>
-              <stop offset="45%" stop-color="#4a220e"/>
-              <stop offset="70%" stop-color="#2d1206"/>
-              <stop offset="100%" stop-color="#5c2b12"/>
+              <stop offset="0%" stop-color="#8c4722"/>
+              <stop offset="45%" stop-color="#5a2a12"/>
+              <stop offset="70%" stop-color="#3b1809"/>
+              <stop offset="100%" stop-color="#6e3316"/>
             </linearGradient>
             <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#f6d896"/>
-              <stop offset="50%" stop-color="#d49a37"/>
-              <stop offset="100%" stop-color="#f6d896"/>
+              <stop offset="0%" stop-color="#ffe1a0"/>
+              <stop offset="50%" stop-color="#e8a23d"/>
+              <stop offset="100%" stop-color="#ffe1a0"/>
             </linearGradient>
             <linearGradient id="str" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9"/>
-              <stop offset="50%" stop-color="#ffe8d6" stop-opacity="1"/>
-              <stop offset="100%" stop-color="#ffffff" stop-opacity="0.9"/>
+              <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
+              <stop offset="50%" stop-color="#fff0e6" stop-opacity="1"/>
+              <stop offset="100%" stop-color="#ffffff" stop-opacity="1"/>
             </linearGradient>
           </defs>
 
@@ -781,42 +815,42 @@ body{
           <line x1="215" y1="233" x2="245" y2="233" stroke="url(#gold)" stroke-width="1.5"/>
           <line x1="215" y1="240" x2="245" y2="240" stroke="url(#gold)" stroke-width="1.5"/>
 
-          <!-- string (left tip (38,22) -> serving (230,96) -> right tip (422,22)) -->
-          <line id="strL" x1="38" y1="22" x2="230" y2="96" stroke="url(#str)" stroke-width="1.8"/>
-          <line id="strR" x1="422" y1="22" x2="230" y2="96" stroke="url(#str)" stroke-width="1.8"/>
+          <!-- string -->
+          <line id="strL" x1="38" y1="22" x2="230" y2="96" stroke="url(#str)" stroke-width="2.2"/>
+          <line id="strR" x1="422" y1="22" x2="230" y2="96" stroke="url(#str)" stroke-width="2.2"/>
 
           <!-- serving wrap -->
-          <circle id="serving" cx="230" cy="96" r="3.5" fill="#f6d896"/>
+          <circle id="serving" cx="230" cy="96" r="4" fill="#ffe1a0"/>
         </svg>
 
-        <!-- Cupid's arrow -->
+        <!-- Cupid's arrow with high-visibility tip & shaft -->
         <svg id="arrow" class="arrow" viewBox="0 0 80 220" aria-hidden="true">
           <defs>
             <linearGradient id="shaft" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#d49a37"/>
-              <stop offset="50%" stop-color="#fff0c4"/>
-              <stop offset="100%" stop-color="#b07820"/>
+              <stop offset="0%" stop-color="#f6d896"/>
+              <stop offset="50%" stop-color="#ffffff"/>
+              <stop offset="100%" stop-color="#d49a37"/>
             </linearGradient>
             <radialGradient id="head" cx="35%" cy="30%" r="70%">
-              <stop offset="0%" stop-color="#ff9ebb"/>
-              <stop offset="55%" stop-color="#e8245a"/>
-              <stop offset="100%" stop-color="#880628"/>
+              <stop offset="0%" stop-color="#ffb3c6"/>
+              <stop offset="55%" stop-color="#ff0055"/>
+              <stop offset="100%" stop-color="#990033"/>
             </radialGradient>
           </defs>
 
           <!-- shaft -->
-          <rect x="38" y="24" width="4" height="176" rx="1.5" fill="url(#shaft)"/>
+          <rect x="37" y="24" width="6" height="176" rx="2" fill="url(#shaft)"/>
 
           <!-- heart-shaped arrowhead -->
           <g id="tip">
             <path d="M 40 2 C 32 14, 22 22, 22 32 C 22 42, 32 46, 40 40 C 48 46, 58 42, 58 32 C 58 22, 48 14, 40 2 Z" fill="url(#head)"/>
-            <path d="M 40 2 C 32 14, 22 22, 22 32 C 22 42, 32 46, 40 40 C 48 46, 58 42, 58 32 C 58 22, 48 14, 40 2 Z" fill="none" stroke="rgba(255,220,230,0.6)" stroke-width="1"/>
+            <path d="M 40 2 C 32 14, 22 22, 22 32 C 22 42, 32 46, 40 40 C 48 46, 58 42, 58 32 C 58 22, 48 14, 40 2 Z" fill="none" stroke="#ffffff" stroke-width="1.5"/>
           </g>
 
           <!-- fletching / feather wings -->
           <g class="arrow__wings">
-            <path class="wingL" d="M 38 170 C 22 176, 12 188, 10 206 C 22 204, 32 196, 38 186 Z" fill="#fff3ea" stroke="#e8a23d" stroke-width="1"/>
-            <path class="wingR" d="M 42 170 C 58 176, 68 188, 70 206 C 58 204, 48 196, 42 186 Z" fill="#fff3ea" stroke="#e8a23d" stroke-width="1"/>
+            <path class="wingL" d="M 38 170 C 22 176, 12 188, 10 206 C 22 204, 32 196, 38 186 Z" fill="#ffffff" stroke="#e8a23d" stroke-width="1.5"/>
+            <path class="wingR" d="M 42 170 C 58 176, 68 188, 70 206 C 58 204, 48 196, 42 186 Z" fill="#ffffff" stroke="#e8a23d" stroke-width="1.5"/>
           </g>
 
           <!-- nock groove -->
@@ -910,7 +944,6 @@ body{
     <p class="gallery__eyebrow">a few favourite moments</p>
 
     <div id="galleryStage" class="galleryStage gallery__stage">
-      <!-- JS populates slides -->
       <button id="galleryPrev" class="gallery__arrow gallery__arrow--prev" type="button" aria-label="Previous photo">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
@@ -929,18 +962,18 @@ body{
     </div>
   </section>
 
-  <!-- ACT 6 — THE FILM (z50) -->
+  <!-- ACT 6 — THE FILM (fullscreen cinema with controls) -->
   <section id="cinema" class="cinema" hidden aria-hidden="true" aria-label="Birthday film">
-<video
-    id="cinemaVideo"
-    class="cinema__video"
-    playsinline
-    preload="metadata" 
-    src="HBD_TANU.mp4">
-</video>
+    <video
+        id="cinemaVideo"
+        class="cinema__video"
+        playsinline
+        controls
+        preload="metadata" 
+        src="HBD_TANU.mp4">
+    </video>
 
-
-  <div class="cinema__scrim" aria-hidden="true"></div>
+    <div class="cinema__scrim" aria-hidden="true"></div>
 
     <div class="cinema__bar cinema__bar--top" aria-hidden="true"></div>
     <div class="cinema__bar cinema__bar--bot" aria-hidden="true"></div>
@@ -963,29 +996,11 @@ body{
 
   <script type="module">
 /* ============================================================
-   HAPPY BIRTHDAY — a birthday film in four acts
-   Vanilla canvas 2D for the tree + GSAP for the orchestration.
-
-   ACT 1  a real recurve bow with a Cupid's arrow nocked — you
-          DRAW the string down and RELEASE to fire (pointer drag,
-          or keyboard). A softly beating heart waits above as the
-          target.
-   ACT 2  the arrow flies up and strikes the heart; the heart
-          jolts, falls, and bursts into a flood of rose that
-          swallows the frame (no cross-fade).
-   ACT 3  a kinetic wish hinges up out of that colour, glyph by
-          glyph, under cinema bars and a slow camera push.
-   ACT 4  a gold light blooms, and the tree grows into one heart
-          of lit blossoms with the hand-lettered wish.
-
-   A GSAP master timeline runs the shot + Acts 2–3; at its end it
-   starts the canvas tree (Act 4), which owns its own rAF and
-   plays once, then holds — living, never looping.
+   HAPPY BIRTHDAY — Vanilla canvas 2D + GSAP orchestration.
    ============================================================ */
 
 import gsap from 'gsap';
 
-/* the pen-stroke plugin: a `drawn` 0..1 property for the underline */
 gsap.registerPlugin({
   name: 'drawn',
   init(target, value) {
@@ -1032,7 +1047,6 @@ const uline   = $('uline').querySelector('.uline__path');
 const bloom   = $('bloom');
 const replay  = $('replay');
 
-/* --- Act 5–6: the gallery + the film --- */
 const continueBtn  = $('continueBtn');
 const gallery       = $('gallery');
 const galleryStage  = $('galleryStage');
@@ -1048,13 +1062,11 @@ const cinemaVideo = $('cinemaVideo');
 const cinemaClose = $('cinemaClose');
 const cinemaPlay  = $('cinemaPlay');
 const cinemaMute  = $('cinemaMute');
+const floatingNext = $('floatingNext');
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isRecord     = new URLSearchParams(location.search).has('record');
 
-/* --- cue log for the recorder: the page stays muted, but it timestamps every
-   beat the film crosses, and the offline sound synth fires foley at those exact
-   times so the audio can never drift from the picture. --- */
 if (isRecord) window.bdayCues = [];
 let recT0 = 0;
 function cue(name){ if (isRecord && recT0) window.bdayCues.push({ cue: name, t: (performance.now() - recT0) / 1000 }); }
@@ -1088,7 +1100,6 @@ const BLOSSOM = [
   { c0: '#ffd2e6', c1: '#e84d9a' },
 ];
 
-/* timeline (seconds, relative to the tree's own start) — brisk */
 const T = {
   trunkStart: 0.10,
   branchSpan: 1.80,
@@ -1458,7 +1469,6 @@ function drawRested(){
 
 function showWish(on){ wishEl.classList.toggle('is-in', on); }
 
-/* the tree's own rAF: plays once from treeStart(), then holds, living */
 let treeStartT = 0, treeLastT = 0, treeRAF = 0, lastPetal = 0, replayArmed = false;
 window.bdayDone = false;
 
@@ -1515,7 +1525,6 @@ function drawFinal(){
    ACTS 1–3 (GSAP) — the bow, the shot, the wish
    ============================================================ */
 
-/* the two headline words become per-glyph spans so each hinges up on its own */
 function splitWord(el){
   const chars = [...el.textContent];
   el.textContent = '';
@@ -1531,7 +1540,6 @@ const line1Chars = splitWord($('wLine1'));
 const line2Chars = splitWord($('wLine2'));
 const kChars = [...line1Chars, ...line2Chars];
 
-/* drifting light motes behind the scene */
 function buildMotes(){
   motes.innerHTML = '';
   for (let i = 0; i < 12; i++){
@@ -1548,16 +1556,11 @@ function buildMotes(){
   }
 }
 
-/* --- bow geometry (measured; re-measured on resize) -------------------------
-   The rig lives lower-left and is rotated so its local "up" axis points at the
-   heart; the shot therefore travels on a diagonal. The draw + arrow math all
-   live in the rig's LOCAL space (offset geometry is transform-independent, so
-   rotation never corrupts it); only the aim ANGLE and the flight DISTANCE come
-   from screen measurements. */
+/* --- BOW & ARROW LOCATION FIX: Centered at 50% width and 72% height --- */
 const tip = $('tip');
 let svgScale = 1, arrowBaseX = 0, arrowBaseY = 0, maxDraw = 120, curDraw = 0;
-let pullUX = 0, pullUY = 1;                               // screen unit: string pull-back
-const REST_NOCK = 96;                                    // string nock, in bow viewBox units
+let pullUX = 0, pullUY = 1;                               
+const REST_NOCK = 96;                                    
 const nockProxy = { val: REST_NOCK };
 
 function applyNock(){
@@ -1566,17 +1569,12 @@ function applyNock(){
 }
 
 function refreshRig(){
-  // the grip is anchored here, and the heart sits at its layout centre (33% down,
-  // centred) — using the layout point, not a live rect, keeps the aim steady even
-  // while the heart is scaling in.
-  const gripX = W * 0.24, gripY = H * 0.76;
+  const gripX = W * 0.5, gripY = H * 0.72;
   const heartX = W * 0.5, heartY = H * 0.33;
-  // rotation so local "up" (0,-1) maps to the grip→heart direction
+  
   const aimRad = Math.atan2(heartX - gripX, gripY - heartY);
-  pullUX = -Math.sin(aimRad); pullUY = Math.cos(aimRad);  // opposite of aim = pull-back
+  pullUX = -Math.sin(aimRad); pullUY = Math.cos(aimRad);
 
-  // #bow / #arrow are SVG — no offset* — so measure rects in the rig's LOCAL
-  // frame: neutralise the rig transform first (getBBox-style, sync, no paint).
   nockProxy.val = REST_NOCK; applyNock();
   gsap.set(archery, { rotation: 0, scale: 1, x: 0, y: 0 });
   archery.style.left = '0px'; archery.style.top = '0px';
@@ -1587,13 +1585,12 @@ function refreshRig(){
   const rR = arrow.getBoundingClientRect();
   svgScale = bR.width / 460;
   const gripLX = (bR.left - aR.left) + 0.5 * bR.width;
-  const gripLY = (bR.top  - aR.top ) + (240 / 300) * bR.height;   // grip ~y240 in viewBox
+  const gripLY = (bR.top  - aR.top ) + (240 / 300) * bR.height;   
   const nockLX = (sR.left - aR.left) + 0.5 * sR.width;
   const nockLY = (sR.top  - aR.top ) + 0.5 * sR.height;
   arrowBaseX = nockLX - ((rR.left - aR.left) + 0.5 * rR.width);
   arrowBaseY = nockLY - ((rR.top  - aR.top ) + (205 / 220) * rR.height);
 
-  // anchor the grip at (gripX,gripY) and rotate the rig around it
   archery.style.left = (gripX - gripLX) + 'px';
   archery.style.top  = (gripY - gripLY) + 'px';
   gsap.set(archery, { transformOrigin: `${gripLX}px ${gripLY}px`, rotation: aimRad * 180 / Math.PI });
@@ -1604,12 +1601,11 @@ function refreshRig(){
 
 function setDraw(d){
   curDraw = clamp(d, 0, maxDraw);
-  gsap.set(arrow, { x: arrowBaseX, y: arrowBaseY + curDraw });   // local +Y = pull back
+  gsap.set(arrow, { x: arrowBaseX, y: arrowBaseY + curDraw });   
   nockProxy.val = REST_NOCK + curDraw / svgScale; applyNock();
   gsap.set(aim, { opacity: 0.55 * (curDraw / maxDraw) });
 }
 
-/* the target heart's beat — gentle, alive; killed the instant we fire */
 let beatTL = null;
 function startBeat(){
   gsap.set(targetHeart, { scale: 1 });
@@ -1624,7 +1620,6 @@ function startBeat(){
 }
 function stopBeat(){ if (beatTL){ beatTL.kill(); beatTL = null; } gsap.set(targetHeart, { scale: 1 }); }
 
-/* a little burst of hearts + sparks where the arrow strikes */
 function miniHeartSVG(fill){
   return `<svg viewBox="0 0 24 22" width="100%" height="100%"><path d="M12 20C5.5 15 1.5 11.4 1.5 6.9 1.5 3.6 4 1.5 7 1.5c2 0 3.4 1.1 5 3 1.6-1.9 3-3 5-3 3 0 5.5 2.1 5.5 5.4C23.5 11.4 19.5 15 12 20Z" fill="${fill}"/></svg>`;
 }
@@ -1648,7 +1643,7 @@ function burstHearts(){
   }
   hero.appendChild(frag);
   nodes.forEach(({ el, heart }) => {
-    const ang = rand(-Math.PI, 0);                       // fan upward + out
+    const ang = rand(-Math.PI, 0);                       
     const dist = rand(heart ? 70 : 40, heart ? 190 : 120);
     gsap.to(el, {
       x: Math.cos(ang) * dist, y: Math.sin(ang) * dist - rand(10, 50),
@@ -1659,11 +1654,7 @@ function burstHearts(){
   });
 }
 
-/* --- the shot + Acts 2–3 timeline ------------------------------------------ */
 function shotGeom(){
-  // flight distance = straight-line from the arrow tip to the heart (measured on
-  // screen, rotation-aware). Moving the arrow that far along its local "up" axis
-  // — which is aimed at the heart — lands the tip dead-centre on it.
   const tipR = tip.getBoundingClientRect();
   const tRect = target.getBoundingClientRect();
   const tipX = tipR.left + tipR.width / 2, tipY = tipR.top + tipR.height / 2;
@@ -1675,7 +1666,7 @@ function shotGeom(){
   const reach = Math.hypot(W / 2, H / 2);
   return {
     arrowStartY: arrowBaseY + curDraw,
-    arrowFlyY:   arrowBaseY + curDraw - flightDist,       // local -Y = toward the heart
+    arrowFlyY:   arrowBaseY + curDraw - flightDist,       
     drawnNock:   REST_NOCK + curDraw / svgScale,
     fallPx, fx: impactX - W / 2, fy: impactY - H / 2,
     floodScale: (distC * 1.12) / 70, bloomScale: (reach * 1.2) / 30,
@@ -1689,12 +1680,10 @@ function buildFilm(m){
     onComplete: () => {
       gsap.set(field, { autoAlpha: 0 });
       treeStart();
-      // fade promptly so the growing tree is revealed with no white hold
       gsap.to(bloom, { autoAlpha: 0, duration: 1.15, ease: 'power2.out' });
     },
   });
 
-  // reset (t=0)
   t.set(target, { y: 0, scaleX: 1, scaleY: 1, opacity: 1 })
    .set(arrow, { opacity: 1, x: arrowBaseX, y: m.arrowStartY, scaleY: 1 })
    .set([flood, bloom], { autoAlpha: 0, scale: 0.001, x: 0, y: 0 })
@@ -1710,7 +1699,6 @@ function buildFilm(m){
    .set(kChars, { transformPerspective: 620, transformOrigin: '50% 100%', yPercent: 135, rotationX: -82 })
    .set(uline, { drawn: 0 });
 
-  // --- the shot: string snaps (twang), arrow flies up into the heart --------
   t.fromTo(nockProxy, { val: m.drawnNock }, { val: REST_NOCK, duration: 0.5, ease: 'elastic.out(1,0.34)', onUpdate: applyNock }, 0)
    .to(arrow, { y: m.arrowFlyY, duration: 0.26, ease: 'power2.in' }, 0)
    .to(arrow, { scaleY: 1.16, duration: 0.14, ease: 'power2.in' }, 0)
@@ -1718,57 +1706,44 @@ function buildFilm(m){
    .to(aim, { opacity: 0, duration: 0.18 }, 0)
    .to([eyebrow, hint], { opacity: 0, duration: 0.2, ease: 'power1.out' }, 0);
 
-  // --- the strike: the arrow embeds, the heart recoils, then holds pierced --
   t.add(burstHearts, 0.26)
-   // recoil along the arrow's line (up + right), springing back
    .to(target, { x: 7, y: -9, duration: 0.06, ease: 'power2.out' }, 0.26)
    .to(target, { x: 0, y: 0, duration: 0.32, ease: 'power2.out' }, 0.32)
    .to(target, { scale: 1.14, duration: 0.06, ease: 'power2.out' }, 0.26)
    .to(target, { scale: 1.0, duration: 0.26, ease: 'power2.inOut' }, 0.32)
-   // the arrow shudders in the wound, holds embedded so the hit reads, then sinks in
    .to(arrow, { rotation: '+=4', duration: 0.05, yoyo: true, repeat: 4, ease: 'sine.inOut' }, 0.27)
    .set(arrow, { rotation: 0 }, 0.52)
    .to(arrow, { opacity: 0, duration: 0.16, ease: 'power1.out' }, 0.56);
 
-  // --- the fall + the burst / flood -----------------------------------------
   t.to(target, { y: m.fallPx, scaleX: 0.84, scaleY: 1.3, duration: 0.34, ease: 'power1.in' }, 0.64)
    .to(target, { scaleX: 1.4, scaleY: 0.6, duration: 0.07, ease: 'power2.out' }, 0.98)
    .set(flood, { autoAlpha: 1 }, 1.00)
    .fromTo(flood, { scale: 0.02 }, { scale: m.floodScale, duration: 0.34, ease: 'power2.in' }, 1.00)
    .to(target, { opacity: 0, duration: 0.12, ease: 'power1.out' }, 1.06);
 
-  // seam: the field is the same rose as the flood
   t.set(field, { autoAlpha: 1 }, 1.32)
    .set(hero, { autoAlpha: 0 }, 1.33)
    .to('.blob', { opacity: 1, duration: 0.6, ease: 'power2.out' }, 1.34)
    .set(flood, { autoAlpha: 0 }, 1.36);
 
-  // --- the camera push -------------------------------------------------------
-  // duration matched to when the bloom covers (3.98) — a longer push used to
-  // keep the timeline (and a white bloom) alive after the tree should already
-  // be growing, which read as dead time before the tree appeared.
   t.fromTo(camera, { scale: 1.0, yPercent: 0 }, { scale: 1.07, yPercent: -1.3, duration: 2.6, ease: 'none' }, 1.38)
    .fromTo(fgrid, { xPercent: 0, yPercent: 0 }, { xPercent: -1.5, yPercent: -1.0, duration: 2.6, ease: 'none' }, 1.38);
 
-  // beat markers for the recorder's soundtrack (no-ops off ?record)
   t.call(cue, ['hit'], 0.26)
    .call(cue, ['flood'], 1.00)
    .call(cue, ['wish'], 1.68)
    .call(cue, ['wish2'], 2.06)
    .call(cue, ['bloom'], 3.42);
 
-  // cinema bars ease into a letterbox
   t.to(barTop, { yPercent: 0, duration: 0.6, ease: 'power2.out' }, 1.5)
    .to(barBot, { yPercent: 0, duration: 0.6, ease: 'power2.out' }, 1.5);
 
-  // --- the kinetic wish ------------------------------------------------------
   t.to(kEyebrow, { opacity: 1, y: 0, duration: 0.45, ease: 'power3.out' }, 1.54)
    .to(line1Chars, { yPercent: 0, rotationX: 0, duration: 0.55, ease: 'power3.out', stagger: 0.033 }, 1.68)
    .to(line2Chars, { yPercent: 0, rotationX: 0, duration: 0.55, ease: 'power3.out', stagger: 0.033 }, 2.06)
    .to(uline, { drawn: 1, duration: 0.45, ease: 'power2.inOut' }, 2.54)
    .to(kSub, { opacity: 1, y: 0, duration: 0.45, ease: 'power3.out' }, 2.74);
 
-  // --- the handoff bloom -----------------------------------------------------
   t.to(barTop, { yPercent: -100, duration: 0.5, ease: 'power2.in' }, 3.32)
    .to(barBot, { yPercent: 100, duration: 0.5, ease: 'power2.in' }, 3.32)
    .set(bloom, { autoAlpha: 1 }, 3.42)
@@ -1777,7 +1752,6 @@ function buildFilm(m){
   return t;
 }
 
-/* --- draw / release interaction -------------------------------------------- */
 let played = false, drawing = false, startPX = 0, startPY = 0, startDraw = 0;
 
 function fire(){
@@ -1797,7 +1771,7 @@ function springBack(){
 
 function autoFire(){
   if (played) return;
-  recT0 = performance.now(); cue('draw');       // t=0 of the soundtrack
+  recT0 = performance.now(); cue('draw');       
   gsap.to({ d: curDraw }, {
     d: maxDraw * 0.94, duration: 0.62, ease: 'power2.inOut',
     onUpdate() { setDraw(this.targets()[0].d); },
@@ -1814,8 +1788,6 @@ archery.addEventListener('pointerdown', (e) => {
 });
 archery.addEventListener('pointermove', (e) => {
   if (!drawing) return;
-  // project the drag onto the pull-back axis, so dragging back along the aim
-  // (down + away from the heart) draws the string — on any shot angle.
   const proj = (e.clientX - startPX) * pullUX + (e.clientY - startPY) * pullUY;
   setDraw(startDraw + proj);
 });
@@ -1831,14 +1803,13 @@ archery.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); autoFire(); }
 });
 
-/* boot Act 1: reveal the target + bow + hint, then start the beat */
 function enter(){
   gsap.set(hero, { autoAlpha: 1 });
   refreshRig();
   setDraw(0);
   gsap.set([eyebrow, hint], { opacity: 0, y: 14 });
   gsap.set(target, { opacity: 0, y: 10, scaleX: 0.9, scaleY: 0.9 });
-  gsap.set(archery, { opacity: 0, scale: 0.85 });        // scale from the grip; keeps rotation
+  gsap.set(archery, { opacity: 0, scale: 0.85 });        
   gsap.set(heartGlow, { opacity: 0, scale: 1 });
   gsap.set(arrow, { opacity: 1 });
 
@@ -1856,13 +1827,13 @@ function armReplay(){
   armContinue();
 }
 
-/* back to Act 1, ready to be drawn again */
 function resetAll(){
   treeStop();
   showWish(false);
   window.bdayDone = false; replayArmed = false;
   replay.classList.remove('is-shown'); replay.hidden = true;
   continueBtn.classList.remove('is-shown'); continueBtn.hidden = true;
+  floatingNext.classList.remove('is-visible');
   closeGallery(); closeCinema();
   if (filmTL){ filmTL.pause(0); }
   gsap.set([flood, bloom], { autoAlpha: 0 });
@@ -1874,18 +1845,16 @@ function resetAll(){
 
 /* ============================================================
    ACT 5 — THE GALLERY
-   A quiet, autoplaying room of photographs. Opens from the bridge
-   button once the wish has landed; closes back to the tree.
    ============================================================ */
 const PHOTOS = [
-  { src: '1.jpg', caption: 'the ones that made me adore you even more' },
+  { src: '1.jpg', caption: 'the ones that makes me adore you even more' },
   { src: '2.jpg', caption: 'a quiet afternoon, made golden' },
   { src: '3.jpg', caption: 'you, un-posed and lovely' },
   { src: '4.jpg', caption: 'the day I keep going back to' },
   { src: '5.jpg', caption: 'small moment, kept forever' },
-  { src: '6.jpg', caption: 'that smile , right there' },
-  { src: '8.jpg', caption: 'us, on an ordinary good day' },
-  { src: '7.jpg', caption: 'and this one, just because' },
+  { src: '6.jpg', caption: 'that smile right there' },
+  { src: '7.jpg', caption: 'us, on an ordinary good day' },
+  { src: '8.jpg', caption: 'and this one, just because' },
 ];
 
 let gIndex = 0, gTimer = 0, gBuilt = false, gDots = [];
@@ -1897,7 +1866,6 @@ function buildGallery(){
   PHOTOS.forEach((p, i) => {
     const fig = document.createElement('figure');
     fig.className = 'slide';
-    // a different, gentle drift per photo so the room never feels mechanical
     const ang = (i * 47) % 360, r = 2.4;
     fig.style.setProperty('--kbx0', `${(Math.cos(ang * Math.PI / 180) * r).toFixed(2)}%`);
     fig.style.setProperty('--kby0', `${(Math.sin(ang * Math.PI / 180) * r).toFixed(2)}%`);
@@ -1924,7 +1892,7 @@ function showSlide(i, userTriggered){
       const img = s.querySelector('img');
       s.classList.remove('is-active');
       img.style.animation = 'none';
-      void img.offsetWidth;              // force reflow so the Ken Burns replays
+      void img.offsetWidth;              
       img.style.animation = '';
       s.classList.add('is-active');
     } else {
@@ -1968,7 +1936,6 @@ galleryNext.addEventListener('click', () => showSlide(gIndex + 1, true));
 galleryPrev.addEventListener('click', () => showSlide(gIndex - 1, true));
 galleryToFilm.addEventListener('click', () => { closeGallery(); openCinema(); });
 
-/* swipe, on the stage only */
 let gTouchX = 0, gTouching = false;
 galleryStage.addEventListener('pointerdown', (e) => { gTouching = true; gTouchX = e.clientX; });
 galleryStage.addEventListener('pointerup', (e) => {
@@ -1984,20 +1951,17 @@ function armContinue(){
 }
 
 /* ============================================================
-   ACT 6 — THE FILM
-   A fullscreen, letterboxed video moment. Opens from the gallery's
-   "watch our film" cue (or directly, once opened once).
+   ACT 6 — THE FILM (REVEALS FLOATING NEXT BUTTON UPON PLAYING)
    ============================================================ */
 function openCinema(){
   cinema.hidden = false;
   cinema.setAttribute('aria-hidden', 'false');
   requestAnimationFrame(() => cinema.classList.add('is-open'));
-  // best-effort true fullscreen (hides browser chrome where supported);
-  // the CSS overlay already covers the full viewport either way.
   const el = cinema;
   const req = el.requestFullscreen || el.webkitRequestFullscreen;
   if (req){ req.call(el).catch(() => {}); }
 }
+
 function closeCinema(){
   if (!cinema.classList.contains('is-open')) return;
   cinema.classList.remove('is-open', 'is-playing');
@@ -2008,16 +1972,22 @@ function closeCinema(){
     (document.exitFullscreen || document.webkitExitFullscreen)?.call(document).catch(() => {});
   }
 }
+
+/* SHOW NEXT BUTTON AS SOON AS VIDEO STARTS PLAYING */
+cinemaVideo.addEventListener('play', () => {
+  cinema.classList.add('is-playing');
+  floatingNext.classList.add('is-visible');
+});
+
 function toggleCinemaPlay(){
   if (cinemaVideo.paused){
     cinemaVideo.play().catch(() => {});
-    cinema.classList.add('is-playing');
-    cinemaMute.hidden = false;
   } else {
     cinemaVideo.pause();
     cinema.classList.remove('is-playing');
   }
 }
+
 function toggleCinemaMute(){
   cinemaVideo.muted = !cinemaVideo.muted;
   cinemaMute.querySelector('.ic-off').hidden = !cinemaVideo.muted;
@@ -2027,7 +1997,6 @@ function toggleCinemaMute(){
 
 cinemaClose.addEventListener('click', closeCinema);
 cinemaPlay.addEventListener('click', toggleCinemaPlay);
-cinemaVideo.addEventListener('click', toggleCinemaPlay);
 cinemaMute.addEventListener('click', (e) => { e.stopPropagation(); toggleCinemaMute(); });
 
 document.addEventListener('keydown', (e) => {
@@ -2041,7 +2010,6 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-/* pause the slideshow (not the film) when the tab is hidden */
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) stopAutoplay(); else restartAutoplay();
 });
@@ -2080,9 +2048,6 @@ if (reduceMotion){
   replay.addEventListener('click', resetAll);
 }
 
-/* ============================================================
-   RECORDING HOOK — the rig draws + fires after its pre-roll
-   ============================================================ */
 if (isRecord){
   window.bdayAPI = {
     start(){ autoFire(); },
@@ -2092,7 +2057,12 @@ if (isRecord){
   </script>
 </body>
 </html>
+n(() => { refreshRig(); setDraw(0); });
+  enter();
+  replay.addEventListener('click', resetAll);
+}
 
+if (isRecord){
   window.bdayAPI = {
     start(){ autoFire(); },
     replay(){ resetAll(); },
