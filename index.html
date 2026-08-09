@@ -626,13 +626,13 @@ body{
   position: fixed; 
 
   /* --- POSITION --- */
-  top: 80px;          /* Distance from bottom of screen */
-  left: 30px;           /* Change from 'left' to 'right' if you want it on the bottom-right */
+  top: 20px;          /* Distance from bottom of screen */
+  left: 20px;           /* Change from 'left' to 'right' if you want it on the bottom-right */
 
   /* --- SIZE --- */
-  width: min(280px); /* Increase width (e.g., 360px) */
+  width: min(360px, 85vw); /* Increase width (e.g., 360px) */
   aspect-ratio: 9/16;     /* Keeps vertical video format (use 16/9 for horizontal videos) */
-  max-width: 85vm;      /* Maximum height on larger screens */
+  max-height: 480px;      /* Maximum height on larger screens */
 
   /* --- STYLING --- */
   z-index: 500;
@@ -1800,14 +1800,14 @@ function resetAll(){
    ACT 5 — THE GALLERY
    ============================================================ */
 const PHOTOS = [
-  { src: '1.jpg', caption: 'the ones that makes me adore you even more' },
-  { src: '2.jpg', caption: 'always wished, I should''ve been there' },
+  { src: '1.jpg', caption: 'the ones that made me smile first' },
+  { src: '2.jpg', caption: 'a quiet afternoon, made golden' },
   { src: '3.jpg', caption: 'you, un-posed and lovely' },
-  { src: '4.jpg', caption: 'so random yet so cute!!' },
+  { src: '4.jpg', caption: 'the day I keep going back to' },
   { src: '5.jpg', caption: 'small moment, kept forever' },
-  { src: '6.jpg', caption: 'that smile right there' },
-  { src: '8.jpg', caption: 'us, on an ordinary good day' },
-  { src: '7.jpg', caption: 'and this one, just because' },
+  { src: '6.jpg', caption: 'that laugh — right there' },
+  { src: '7.jpg', caption: 'us, on an ordinary good day' },
+  { src: '8.jpg', caption: 'and this one, just because' },
 ];
 
 let gIndex = 0, gTimer = 0, gBuilt = false, gDots = [];
