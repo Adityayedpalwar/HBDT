@@ -521,21 +521,73 @@ body{
   box-shadow:inset 0 -50px 60px -40px rgba(0,0,0,.55), inset 0 40px 50px -40px rgba(0,0,0,.3);
 }
 
+/* Gallery Navigation Arrows (Base + Mobile Styles) */
 .gallery__arrow{
-  position:absolute; top:50%; transform:translateY(-50%);
-  width:42px; height:42px; border-radius:50%; z-index:3;
-  display:flex; align-items:center; justify-content:center;
-  color:#f6e6d6; background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,224,180,.22);
-  backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
-  cursor:pointer; opacity:0; transition:opacity .5s ease .2s, background .2s ease, transform .2s var(--ease-out);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  z-index: 10; /* Ensures arrows sit on top of slide images */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f6e6d6;
+  background: rgba(0, 0, 0, 0.55); /* Dark semi-transparent background for readability */
+  border: 1px solid rgba(255, 224, 180, 0.35);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+  opacity: 0.9;
+  transition: background .2s ease, transform .2s var(--ease-out), opacity .2s ease;
+}
+
+.gallery.is-open .gallery__arrow{ 
+  opacity: 0.9; 
+}
+
+.gallery__arrow:hover{ 
+  background: rgba(0, 0, 0, 0.8); 
+  transform: translateY(-50%) scale(1.05); 
+}
+
+.gallery__arrow:active{ 
+  transform: translateY(-50%) scale(0.92); 
+}
+
+/* Positioning inside the image container */
+.gallery__arrow--prev{ 
+  left: 12px; 
+}
+
+.gallery__arrow--next{ 
+  right: 12px; 
+}
+
+/* Mobile-specific adjustments (Screens <= 560px) */
+@media (max-width: 560px){
+  .gallery__arrow {
+    width: 38px;
+    height: 38px;
+    background: rgba(18, 6, 12, 0.7); /* High-contrast backdrop */
+    border-color: rgba(255, 224, 180, 0.5);
+  }
+
+  .gallery__arrow--prev {
+    left: 8px; /* Inset from the left frame edge */
+  }
+
+  .gallery__arrow--next {
+    right: 8px; /* Inset from the right frame edge */
+  }
 }
 .gallery.is-open .gallery__arrow{ opacity:.85; }
 .gallery__arrow:hover{ opacity:1; background:rgba(255,255,255,.14); }
 .gallery__arrow:active{ transform:translateY(-50%) scale(.92); }
 .gallery__arrow--prev{ left:clamp(6px, 2.4vw, 26px); }
 .gallery__arrow--next{ right:clamp(6px, 2.4vw, 26px); }
-@media (max-width: 560px){ .gallery__arrow{ display:none; } }
+/* @media (max-width: 560px){ .gallery__arrow{ display:none; } } */
 
 .gallery__foot{
   display:flex; flex-direction:column; align-items:center; gap:14px;
@@ -578,9 +630,9 @@ body{
   left: 20px;           /* Change from 'left' to 'right' if you want it on the bottom-right */
 
   /* --- SIZE --- */
-  width: min(360px, 85vw); /* Increase width (e.g., 360px) */
+  width: min(432px, 102vw); /* Increase width (e.g., 360px) */
   aspect-ratio: 9/16;     /* Keeps vertical video format (use 16/9 for horizontal videos) */
-  max-height: 480px;      /* Maximum height on larger screens */
+  max-height: 576px;      /* Maximum height on larger screens */
 
   /* --- STYLING --- */
   z-index: 500;
@@ -857,14 +909,21 @@ body{
 
     <p class="gallery__eyebrow">a few favourite moments</p>
 
-    <div id="galleryStage" class="galleryStage gallery__stage">
-      <button id="galleryPrev" class="gallery__arrow gallery__arrow--prev" type="button" aria-label="Previous photo">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
-      </button>
-      <button id="galleryNext" class="gallery__arrow gallery__arrow--next" type="button" aria-label="Next photo">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-      </button>
-    </div>
+    <<div id="galleryStage" class="galleryStage gallery__stage">
+  <!-- JavaScript populates .slide elements here -->
+
+  <!-- Navigation Arrows -->
+  <button id="galleryPrev" class="gallery__arrow gallery__arrow--prev" type="button" aria-label="Previous photo">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polyline points="15 18 9 12 15 6"/>
+    </svg>
+  </button>
+  <button id="galleryNext" class="gallery__arrow gallery__arrow--next" type="button" aria-label="Next photo">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polyline points="9 18 15 12 9 6"/>
+    </svg>
+  </button>
+</div>
 
     <div class="gallery__foot">
       <p id="galleryCaption" class="gallery__caption"></p>
